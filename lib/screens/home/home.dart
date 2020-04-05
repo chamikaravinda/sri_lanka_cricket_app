@@ -1,10 +1,11 @@
-import 'package:app/models/brew.dart';
+import 'package:app/models/fixtures.dart';
 import 'package:app/screens/home/setting_form.dart';
 import 'package:app/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:app/services/database.dart';
-import 'package:app/screens/home/brew_list.dart';
+import 'package:app/screens/home/fixtures_list.dart';
+import 'package:app/shared/sideDrawer.dart';
 
 class Home extends StatelessWidget {
 
@@ -24,37 +25,46 @@ class Home extends StatelessWidget {
       );
     }
 
-    return StreamProvider<List<Brew>>.value(
-      value: DatabaseService().brews,
+    return StreamProvider<List<Fixtures>>.value(
+      value: DatabaseService().fixtures,
       child: Scaffold(
-        backgroundColor: Colors.brown[50],
+        backgroundColor: Colors.blue[200],
         appBar: AppBar(
-          title: Text('Brew Crew'),
-          backgroundColor:  Colors.brown[400],
+          title: Text('Sri Lanka Cricket'),
+          backgroundColor:  Colors.blue[900],
           elevation: 0.0,
-          actions: <Widget>[
-            FlatButton.icon(
-                onPressed: () async{
-                  await _authService.signOut();
-                },
-                icon: Icon(Icons.person,color: Colors.white,),
-                label: Text('Log out',style: TextStyle(color:Colors.white)),
-            ),
-            FlatButton.icon(
-                onPressed: () => _showSettingsPanel(),
-                icon: Icon(Icons.settings),
-                label: Text('Settings')
-            )
-          ],
         ),
+        drawer: SideDrawer(),
         body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/coffee_bg.png'),
+                image: AssetImage('images/bg.jpg'),
                 fit: BoxFit.cover,
               )
             ),
-            child: BrewList()),
+            child: Column(
+                crossAxisAlignment:CrossAxisAlignment.stretch ,
+                children: <Widget>[
+                    SafeArea(
+                      child: SizedBox(height: 20.0),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Card(
+                        child: ListTile(
+                          title:Text(
+                              'Upcoming Fixtures',
+                            style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.w600),
+                          ),
+                          onTap: (){},
+                        ),
+                      ),
+                    ),
+                    Expanded(child: FixturesList()),
+                  //:TODO Add the sponser bottom bar and make the home screen scrollable
+                  ],
+                )
+        ),
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:app/models/brew.dart';
+import 'package:app/models/fixtures.dart';
 import 'package:app/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -7,23 +7,26 @@ class DatabaseService{
   final String uid;
   DatabaseService({this.uid});
   //collection reference
-  final CollectionReference brewCollection = Firestore.instance.collection('users');
+  final CollectionReference userCollection = Firestore.instance.collection('users');
+  final CollectionReference fixturesCollection = Firestore.instance.collection('upcomingFixtures');
 
   Future updateUserData(String name,String email) async {
-    return await brewCollection.document(uid).setData({
+    return await userCollection.document(uid).setData({
       'uid':uid,
       'name' :name,
       'email':email
     });
   }
 
-  //brew list from snapshot
-  List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot){
+  //Fixtures list from snapshot
+  List<Fixtures> _brewListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((doc){
-      return Brew(
-        name: doc.data['name'] ?? '',
-        strength: doc.data['stregth'] ?? 0,
-        suger: doc.data['sugers'] ?? '0',
+      return Fixtures(
+        date: doc.data['date'] ?? '',
+        flag: doc.data['flag'] ?? '',
+        match: doc.data['match'] ?? '',
+        time: doc.data['time'] ?? '',
+        vs: doc.data['vs '] ?? '',
       );
     }).toList();
   }
@@ -33,20 +36,19 @@ class DatabaseService{
     return UserData(
       uid: uid,
       name: snapshot.data['name'],
-      sugers: snapshot.data['sugers'],
-      strength: snapshot.data['stregth']
+      email: snapshot.data['email'],
     );
   }
 
-  //get brew stream
-  Stream<List<Brew>> get brews{
-    return brewCollection.snapshots()
+  //get Fixtures stream
+  Stream<List<Fixtures>> get fixtures{
+    return fixturesCollection.snapshots()
     .map(_brewListFromSnapshot);
   }
 
   //get user doc stream
   Stream<UserData> get userData{
-    return brewCollection.document(uid).snapshots()
+    return userCollection.document(uid).snapshots()
     .map(_userDataFromSnapshot);
   }
 }

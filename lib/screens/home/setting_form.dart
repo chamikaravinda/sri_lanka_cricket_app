@@ -47,7 +47,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 //dropdown
                 DropdownButtonFormField(
                   decoration: textInputDecoration,
-                  value: _currentSuger ?? userData.sugers,
+                  value: _currentSuger ?? '',
                   items: sugars.map((sugar) {
                     return DropdownMenuItem(
                       value: sugar,
@@ -58,8 +58,8 @@ class _SettingsFormState extends State<SettingsForm> {
                 ),
                 //slider
                 Slider(
-                  value: (_currentStrength ?? userData.strength).toDouble(),
-                  activeColor: Colors.brown[_currentStrength ?? userData.strength],
+                  value: (_currentStrength ?? 1).toDouble(),
+                  activeColor: Colors.brown[_currentStrength ?? 1],
                   inactiveColor: Colors.brown,
                   min: 100.0,
                   max: 900.0,

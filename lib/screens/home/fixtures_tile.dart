@@ -16,7 +16,7 @@ class FixturesTile extends StatelessWidget {
             radius: 25.0,
             backgroundColor: Colors.grey,
             backgroundImage: AssetImage(
-                'images/${fixtures.flag}.png'),
+                'images/${fixtures.flag}'),
           ),
           title: Padding(
             padding: EdgeInsets.fromLTRB(3.0, 0, 0, 0),

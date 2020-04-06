@@ -7,6 +7,8 @@ import 'package:app/services/database.dart';
 import 'loading.dart';
 class SideDrawer extends StatefulWidget {
 
+  final Function toggleView;
+  SideDrawer({this.toggleView});
 
   @override
   _SideDrawerState createState() => _SideDrawerState();
@@ -71,7 +73,8 @@ class _SideDrawerState extends State<SideDrawer> {
                             ),
                           ),
                           onTap: () {
-                            Navigator.pop(context);
+                            print('Change to Home');
+                            widget.toggleView(1);
                           },
                         ),
                         ListTile(
@@ -86,7 +89,8 @@ class _SideDrawerState extends State<SideDrawer> {
                             ),
                           ),
                           onTap: () {
-                            Navigator.pop(context);
+                            print('Change to Fixtures');
+                            widget.toggleView(2);
                           },
                         ),
                         ListTile(

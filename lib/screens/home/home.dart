@@ -1,5 +1,6 @@
 import 'package:app/models/fixtures.dart';
 import 'package:app/screens/home/fixtures.dart';
+import 'package:app/screens/home/settings.dart';
 import 'package:app/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int showPage = 2;
+  int showPage = 1;
 
   void toggleView(int page){
     setState(() => showPage = page);
@@ -68,6 +69,8 @@ class _HomeState extends State<Home> {
       );
     }else if(showPage ==2 ) {
       return FixturesCalander(toggleView: toggleView,);
+    }else if(showPage ==8) {
+      return Settings(toggleView: toggleView,);
     }else{
       return Loading();
     }

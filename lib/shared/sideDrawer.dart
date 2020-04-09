@@ -191,7 +191,9 @@ class _SideDrawerState extends State<SideDrawer> {
                                           color: Colors.white
                                         ),
                                       ),
-                                      onTap: (){},
+                                      onTap: (){
+                                        widget.toggleView(8);
+                                      },
                                     ),
                                   ListTile(
                                       leading: Icon(

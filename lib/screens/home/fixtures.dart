@@ -16,7 +16,7 @@ class _FixturesCalanderState extends State<FixturesCalander> {
     return Scaffold(
       backgroundColor: Colors.blue[200],
       appBar: AppBar(
-        title: Text('Sri Lanka Cricket'),
+        title: Text('Fixtures Calander'),
         backgroundColor:  Colors.blue[900],
         elevation: 0.0,
       ),

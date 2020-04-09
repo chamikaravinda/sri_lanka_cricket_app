@@ -10,6 +10,6 @@ class UserData{
   final String uid;
   final String name;
   final String email;
-
-  UserData({this.uid,this.name,this.email});
+  final String birthDay;
+  UserData({this.uid,this.name,this.email,this.birthDay});
 }

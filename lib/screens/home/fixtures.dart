@@ -1,34 +1,78 @@
+import 'dart:convert';
+import 'package:app/models/fixture.dart';
+import 'package:app/services/database.dart';
 import 'package:app/shared/sideDrawer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class FixturesCalander extends StatefulWidget {
+import 'fixtures_calander.dart';
 
+
+class Fixtures extends StatefulWidget {
   final Function toggleView;
-  FixturesCalander({this.toggleView});
+  Fixtures({this.toggleView});
 
   @override
-  _FixturesCalanderState createState() => _FixturesCalanderState();
+  _FixturesState createState() => _FixturesState();
 }
 
-class _FixturesCalanderState extends State<FixturesCalander> {
+class _FixturesState extends State<Fixtures> {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue[200],
-      appBar: AppBar(
-        title: Text('Fixtures Calander'),
-        backgroundColor:  Colors.blue[900],
-        elevation: 0.0,
-      ),
-      drawer: SideDrawer(toggleView: widget.toggleView),
-      body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('images/bg.jpg'),
-              fit: BoxFit.cover,
-            )
+    return StreamProvider<List<Fixture>>.value(
+      value: DatabaseService().fixtures,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Fixtures Calander'),
+          backgroundColor:  Colors.blue[900],
+          elevation: 0.0,
+        ),
+        drawer: SideDrawer(toggleView: widget.toggleView),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              FixtureCalander()
+//              ..._selectedEvents.map((event) => ListTile(
+//                title: Text(event),
+//              )),
+            ],
+          ),
         ),
       ),
     );
   }
+
+//  _showAddDialog() async {
+//    await showDialog(
+//        context: context,
+//        builder: (context) => AlertDialog(
+//          content: TextField(
+//            controller: _eventController,
+//          ),
+//          actions: <Widget>[
+//            FlatButton(
+//              child: Text("Save"),
+//              onPressed: () {
+//                if (_eventController.text.isEmpty) return;
+//                if (_events[_controller.selectedDay] != null) {
+//                  _events[_controller.selectedDay]
+//                      .add(_eventController.text);
+//                } else {
+//                  _events[_controller.selectedDay] = [
+//                    _eventController.text
+//                  ];
+//                }
+//                prefs.setString("events", json.encode(encodeMap(_events)));
+//                _eventController.clear();
+//                Navigator.pop(context);
+//              },
+//            )
+//          ],
+//        ));
+//    setState(() {
+//      _selectedEvents = _events[_controller.selectedDay];
+//    });
+//  }
 }

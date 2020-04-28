@@ -105,7 +105,8 @@ class _SideDrawerState extends State<SideDrawer> {
                             ),
                           ),
                           onTap: () {
-                            Navigator.pop(context);
+                            print('Change to ICC Rankings');
+                            widget.toggleView(3);
                           },
                         ),
                         ListTile(

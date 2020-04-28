@@ -1,4 +1,4 @@
-import 'package:app/models/fixtures.dart';
+import 'package:app/models/fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:app/screens/home/fixtures_tile.dart';
@@ -11,7 +11,7 @@ class FixturesList extends StatefulWidget {
 class _FixturesListState extends State<FixturesList> {
   @override
   Widget build(BuildContext context) {
-    final fixtures = Provider.of<List<Fixtures>>(context) ?? [];
+    final fixtures = Provider.of<List<Fixture>>(context) ?? [];
 
     return ListView.builder(
         itemCount: fixtures.length,

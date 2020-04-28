@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:app/models/fixtures.dart';
+import 'package:app/models/fixture.dart';
 
 class FixturesTile extends StatelessWidget {
-  final Fixtures fixtures;
+  final Fixture fixtures;
   FixturesTile({this.fixtures});
 
   @override

@@ -1,4 +1,4 @@
-import 'package:app/models/fixtures.dart';
+import 'package:app/models/fixture.dart';
 import 'package:app/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -20,9 +20,9 @@ class DatabaseService{
   }
 
   //Fixtures list from snapshot
-  List<Fixtures> _fixtureListFromSnapshot(QuerySnapshot snapshot){
+  List<Fixture> _fixtureListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((doc){
-      return Fixtures(
+      return Fixture(
         date: doc.data['date'] ?? '',
         flag: doc.data['flag'] ?? '',
         match: doc.data['match'] ?? '',
@@ -43,7 +43,7 @@ class DatabaseService{
   }
 
   //get Fixtures stream
-  Stream<List<Fixtures>> get fixtures{
+  Stream<List<Fixture>> get fixtures{
     return fixturesCollection.snapshots()
     .map(_fixtureListFromSnapshot);
   }

@@ -1,5 +1,6 @@
-import 'package:app/models/fixtures.dart';
+import 'package:app/models/fixture.dart';
 import 'package:app/screens/home/fixtures.dart';
+import 'package:app/screens/home/icc_ranking.dart';
 import 'package:app/screens/home/settings.dart';
 import 'package:app/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
 
     if(showPage==1){
-      return StreamProvider<List<Fixtures>>.value(
+      return StreamProvider<List<Fixture>>.value(
         value: DatabaseService().fixtures,
         child: Scaffold(
           backgroundColor: Colors.blue[200],
@@ -68,7 +69,9 @@ class _HomeState extends State<Home> {
         ),
       );
     }else if(showPage ==2 ) {
-      return FixturesCalander(toggleView: toggleView,);
+      return Fixtures(toggleView: toggleView,);
+    }else if(showPage ==3 ) {
+      return ICCRanking(toggleView: toggleView,);
     }else if(showPage ==8) {
       return Settings(toggleView: toggleView,);
     }else{

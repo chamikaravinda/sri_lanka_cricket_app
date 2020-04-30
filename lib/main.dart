@@ -16,8 +16,9 @@ class MyApp extends StatelessWidget {
         theme: new ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.blue[900],
-          backgroundColor: Colors.white,
-          buttonColor: Colors.blue[900]
+          backgroundColor: Colors.amber,
+          buttonColor: Colors.blue[900],
+          canvasColor:Colors.white,
 
         ),
         home:Wrapper(),

@@ -1,22 +1,26 @@
-import 'package:app/models/fixture.dart';
+import 'package:flutter/material.dart';
 import 'package:app/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:app/shared/constants.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
 
-class TicketForm extends StatefulWidget {
+class TicketBookingForm extends StatefulWidget {
+
+  final fixtures;
+  TicketBookingForm({this.fixtures});
+
   @override
-  _TicketFormState createState() => _TicketFormState();
+  _TicketBookingFormState createState() => _TicketBookingFormState(this.fixtures);
 }
 
-class _TicketFormState extends State<TicketForm> {
+class _TicketBookingFormState extends State<TicketBookingForm> {
+
+  final fixtures;
+  _TicketBookingFormState(this.fixtures);
+
   final _ticketFormKey = GlobalKey<FormState>();
 
   List<String> _dropDownGame = [];
   List<String> _dropDownCardType=["Visa","Master Card" ,"American Express"];
-
   String _game;
   String _noOfTickets = '';
   String _cardType="Visa";
@@ -26,15 +30,13 @@ class _TicketFormState extends State<TicketForm> {
   @override
   Widget build(BuildContext context) {
 
-    final fixtures = Provider.of<List<Fixture>>(context) ?? [];
-
     if(_dropDownGame.length==0){
       String temp;
       fixtures.forEach((fixture) => {
         temp = fixture.match+"\n VS "+fixture.vs,
         _dropDownGame.add(temp),
       });
-      _game = _dropDownGame.elementAt(0);
+      //_game = _dropDownGame.first;
     }
 
     return Form(
@@ -65,9 +67,8 @@ class _TicketFormState extends State<TicketForm> {
                     onChanged: (String newValue) {
                       setState(() {
                         _game = newValue;
-                       state.didChange(newValue);
+                        state.didChange(newValue);
                       });
-                      print(_dropDownGame.toString());
                     },
                     items: _dropDownGame.map<DropdownMenuItem<String>>((String itemValue) {
                       return DropdownMenuItem<String>(
@@ -89,25 +90,25 @@ class _TicketFormState extends State<TicketForm> {
               )),
           SizedBox(height: 10.0,),
           TextFormField(
-            decoration: textInputDecorationBlack.copyWith(
-                hintText: 'Not more than 10 tickets',
-                prefixIcon: Icon(Icons.vpn_key,color: Colors.grey,)
-            ),
-            initialValue: _noOfTickets,
-            validator: (value) {
-              if(value==null||value==''){
-                return 'Enter the valid ticket amount';
-              }
-              if (value.isEmpty) {
-                return 'Enter the valid ticket amount';
-              }
-              return null;
-            },
-            onChanged: (val){
-              setState(() => _noOfTickets=val);
-            },
-            keyboardType: TextInputType.numberWithOptions(decimal: true)
-    ),
+              decoration: textInputDecorationBlack.copyWith(
+                  hintText: 'Not more than 10 tickets',
+                  prefixIcon: Icon(Icons.vpn_key,color: Colors.grey,)
+              ),
+              initialValue: _noOfTickets,
+              validator: (value) {
+                if(value==null||value==''){
+                  return 'Enter the valid ticket amount';
+                }
+                if (value.isEmpty) {
+                  return 'Enter the valid ticket amount';
+                }
+                return null;
+              },
+              onChanged: (val){
+                setState(() => _noOfTickets=val);
+              },
+              keyboardType: TextInputType.numberWithOptions(decimal: true)
+          ),
           SizedBox(height: 20.0,),
           Text(
               'Debit/Credit Card Type',
@@ -151,38 +152,38 @@ class _TicketFormState extends State<TicketForm> {
               style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.normal
-          )),
+              )),
           SizedBox(height: 10.0,),
           TextFormField(
-            decoration: textInputDecorationBlack.copyWith(
-                hintText: 'Credit Card number',
-                prefixIcon: Icon(Icons.vpn_key,color: Colors.grey,)
-            ),
-            validator: (val)=>val.length!=16 ? 'Enter the valid Card Number' :null,
-            onChanged: (val){
-              setState(() => _cardNumber=val);
-            },
-            keyboardType: TextInputType.numberWithOptions(decimal: true)
-    ),
+              decoration: textInputDecorationBlack.copyWith(
+                  hintText: 'Credit Card number',
+                  prefixIcon: Icon(Icons.vpn_key,color: Colors.grey,)
+              ),
+              validator: (val)=>val.length!=16 ? 'Enter the valid Card Number' :null,
+              onChanged: (val){
+                setState(() => _cardNumber=val);
+              },
+              keyboardType: TextInputType.numberWithOptions(decimal: true)
+          ),
           SizedBox(height: 20.0,),
           Text(
               'CSV',
               style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.normal
-          )),
+              )),
           SizedBox(height: 10.0,),
           TextFormField(
-            decoration: textInputDecorationBlack.copyWith(
-                hintText: 'Credit Card csv number',
-                prefixIcon: Icon(Icons.vpn_key,color: Colors.grey,)
-            ),
-            validator: (val)=>val.length!=3 ? 'Enter the valid CSV Number' :null,
-            onChanged: (val){
-              setState(() =>_cvsNumber=val);
-            },
-            keyboardType: TextInputType.numberWithOptions(decimal: true)
-    ),
+              decoration: textInputDecorationBlack.copyWith(
+                  hintText: 'Credit Card csv number',
+                  prefixIcon: Icon(Icons.vpn_key,color: Colors.grey,)
+              ),
+              validator: (val)=>val.length!=3 ? 'Enter the valid CSV Number' :null,
+              onChanged: (val){
+                setState(() =>_cvsNumber=val);
+              },
+              keyboardType: TextInputType.numberWithOptions(decimal: true)
+          ),
           SizedBox(height: 42.0),
           Center(
             child: FlatButton(

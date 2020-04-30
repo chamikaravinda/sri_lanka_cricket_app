@@ -1,4 +1,6 @@
-import 'package:app/screens/home/tickets_form.dart';
+import 'package:app/models/ticket_booking.dart';
+import 'package:app/screens/home/tickets_bookings.dart';
+import 'package:app/screens/home/tickets_new_booking.dart';
 import 'package:app/services/database.dart';
 import 'package:app/shared/sideDrawer.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +20,15 @@ class Tickets extends StatefulWidget {
 class _TicketsState extends State<Tickets> {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<Fixture>>.value(
-      value: DatabaseService().latestFixtures,
+    return MultiProvider(
+      providers: [
+        StreamProvider<List<Fixture>>.value(
+          value: DatabaseService().latestFixtures,
+        ),
+        StreamProvider<List<TicketBooking>>.value(
+          value: DatabaseService().userTicketBookings,
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: Text('Tickets'),
@@ -60,12 +69,12 @@ class _TicketsState extends State<Tickets> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        TicketForm(),
+                        TicketNewBooking(),
                       ],
                     ),
                   ),
                 ),
-                Icon(Icons.directions_transit),
+                TicketBookings(),
               ],
             ),
           ),

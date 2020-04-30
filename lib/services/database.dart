@@ -1,4 +1,5 @@
 import 'package:app/models/fixture.dart';
+import 'package:app/models/ticket_booking.dart';
 import 'package:app/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -101,6 +102,27 @@ class DatabaseService{
       'cardNumber':cardNumber,
       'csvNumber':csvNumber,
     });
+  }
+
+  //get ticket booking snapshot
+  Stream<List<TicketBooking>> get userTicketBookings{
+    return ticketBookingCollection.where('uid',isEqualTo:uid).snapshots()
+        .map(_userTicketBookingsFromSnapshot);
+  }
+
+  //get ticket booking from snapshot
+  List<TicketBooking> _userTicketBookingsFromSnapshot(QuerySnapshot snapshot){
+    print(snapshot);
+    return snapshot.documents.map((doc){
+      return TicketBooking(
+        uid:doc.data['uid'] ?? '',
+        game:doc.data['game'] ?? '',
+        noOfTickets:doc.data['noOfTickets'] ?? '',
+        cardType:doc.data['cardType'] ?? '',
+        cardNumber:doc.data['cardNumber'] ?? '',
+        csvNumber:doc.data['csvNumber'] ?? '',
+      );
+    }).toList();
   }
 
 

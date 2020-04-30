@@ -25,7 +25,7 @@ class _FixturesState extends State<Fixtures> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Fixtures Calander'),
-          backgroundColor:  Colors.blue[900],
+          backgroundColor: Colors.blue[900],
           elevation: 0.0,
         ),
         drawer: SideDrawer(toggleView: widget.toggleView),
@@ -34,45 +34,10 @@ class _FixturesState extends State<Fixtures> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               FixtureCalander()
-//              ..._selectedEvents.map((event) => ListTile(
-//                title: Text(event),
-//              )),
             ],
           ),
         ),
       ),
     );
   }
-
-//  _showAddDialog() async {
-//    await showDialog(
-//        context: context,
-//        builder: (context) => AlertDialog(
-//          content: TextField(
-//            controller: _eventController,
-//          ),
-//          actions: <Widget>[
-//            FlatButton(
-//              child: Text("Save"),
-//              onPressed: () {
-//                if (_eventController.text.isEmpty) return;
-//                if (_events[_controller.selectedDay] != null) {
-//                  _events[_controller.selectedDay]
-//                      .add(_eventController.text);
-//                } else {
-//                  _events[_controller.selectedDay] = [
-//                    _eventController.text
-//                  ];
-//                }
-//                prefs.setString("events", json.encode(encodeMap(_events)));
-//                _eventController.clear();
-//                Navigator.pop(context);
-//              },
-//            )
-//          ],
-//        ));
-//    setState(() {
-//      _selectedEvents = _events[_controller.selectedDay];
-//    });
-//  }
 }

@@ -54,6 +54,8 @@ class AuthService{
       return null;
     }
   }
+
+  //update user details
   Future updateUserDetaisl(String email,String password,String name,String birthDay) async{
     try{
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);

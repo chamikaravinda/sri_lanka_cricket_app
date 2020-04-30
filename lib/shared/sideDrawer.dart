@@ -92,6 +92,21 @@ class _SideDrawerState extends State<SideDrawer> {
                             print('Change to Fixtures');
                             widget.toggleView(2);
                           },
+                        ),ListTile(
+                          leading: Icon(
+                            Icons.content_paste,
+                            color: Colors.white,
+                          ),
+                          title: Text(
+                            'Tickets',
+                            style: TextStyle(
+                                color: Colors.white
+                            ),
+                          ),
+                          onTap: () {
+                            print('Change to Tickets');
+                            widget.toggleView(3);
+                          },
                         ),
                         ListTile(
                           leading: Icon(
@@ -106,7 +121,7 @@ class _SideDrawerState extends State<SideDrawer> {
                           ),
                           onTap: () {
                             print('Change to ICC Rankings');
-                            widget.toggleView(3);
+                            widget.toggleView(4);
                           },
                         ),
                         ListTile(

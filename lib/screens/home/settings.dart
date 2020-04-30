@@ -24,7 +24,6 @@ class _SettingsState extends State<Settings> {
   final AuthService _authService = AuthService();
 
   final _ediPofileFormKey = GlobalKey<FormState>();
-  final _changePasswordFormKey = GlobalKey<FormState>();
 
   //text filed state
   String name = '';

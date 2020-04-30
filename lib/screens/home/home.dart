@@ -2,6 +2,7 @@ import 'package:app/models/fixture.dart';
 import 'package:app/screens/home/fixtures.dart';
 import 'package:app/screens/home/icc_ranking.dart';
 import 'package:app/screens/home/settings.dart';
+import 'package:app/screens/home/tickets.dart';
 import 'package:app/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class _HomeState extends State<Home> {
 
     if(showPage==1){
       return StreamProvider<List<Fixture>>.value(
-        value: DatabaseService().fixtures,
+        value: DatabaseService().latestFixtures,
         child: Scaffold(
           backgroundColor: Colors.blue[200],
           appBar: AppBar(
@@ -71,6 +72,8 @@ class _HomeState extends State<Home> {
     }else if(showPage ==2 ) {
       return Fixtures(toggleView: toggleView,);
     }else if(showPage ==3 ) {
+      return Tickets(toggleView: toggleView,);
+    }else if(showPage ==4 ) {
       return ICCRanking(toggleView: toggleView,);
     }else if(showPage ==8) {
       return Settings(toggleView: toggleView,);

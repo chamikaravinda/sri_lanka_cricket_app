@@ -18,7 +18,6 @@ class _FixtureCalanderState extends State<FixtureCalander> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = CalendarController();
     _selectedEvents = [];
@@ -43,7 +42,6 @@ class _FixtureCalanderState extends State<FixtureCalander> {
       tempEventList=[]
     });
 
-    //:TODO create event array from this fixtures
     return Column(
       children: <Widget>[
         TableCalendar(

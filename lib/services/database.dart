@@ -9,7 +9,10 @@ class DatabaseService{
   //collection reference
   final CollectionReference userCollection = Firestore.instance.collection('users');
   final CollectionReference fixturesCollection = Firestore.instance.collection('upcomingFixtures');
+  final CollectionReference ticketBookingCollection = Firestore.instance.collection('ticketBooking');
 
+  /* USER MANAGEMENT */
+  //add and update user
   Future updateUserData(String name,String email,String birthDay) async {
     return await userCollection.document(uid).setData({
       'uid':uid,
@@ -18,7 +21,22 @@ class DatabaseService{
       'birthDay':birthDay
     });
   }
+  //userData from snapshot
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot){
+    return UserData(
+        uid: uid,
+        name: snapshot.data['name'],
+        email: snapshot.data['email'],
+        birthDay: snapshot.data['birthDay']
+    );
+  }
+  //get user doc stream
+  Stream<UserData> get userData{
+    return userCollection.document(uid).snapshots()
+        .map(_userDataFromSnapshot);
+  }
 
+  /* FIXTURES MANAGEMENT */
   //Fixtures list from snapshot
   List<Fixture> _fixtureListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((doc){
@@ -32,15 +50,33 @@ class DatabaseService{
     }).toList();
   }
 
-  //userData from snapshot
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot){
-    return UserData(
-      uid: uid,
-      name: snapshot.data['name'],
-      email: snapshot.data['email'],
-      birthDay: snapshot.data['birthDay']
-    );
+  //Latest Fixtures list from snapshot
+  List<Fixture> _latestFixtureListFromSnapshot(QuerySnapshot snapshot){
+    var len = snapshot.documents.asMap().length;
+    if(len<5){
+      return snapshot.documents.map((doc){
+        return Fixture(
+          date: doc.data['date'] ?? '',
+          flag: doc.data['flag'] ?? '',
+          match: doc.data['match'] ?? '',
+          time: doc.data['time'] ?? '',
+          vs: doc.data['vs '] ?? '',
+        );
+      }).toList();
+    }
+    else{
+      return snapshot.documents.map((doc){
+        return Fixture(
+          date: doc.data['date'] ?? '',
+          flag: doc.data['flag'] ?? '',
+          match: doc.data['match'] ?? '',
+          time: doc.data['time'] ?? '',
+          vs: doc.data['vs '] ?? '',
+        );
+      }).toList().getRange(0, 4);
+    }
   }
+
 
   //get Fixtures stream
   Stream<List<Fixture>> get fixtures{
@@ -48,9 +84,24 @@ class DatabaseService{
     .map(_fixtureListFromSnapshot);
   }
 
-  //get user doc stream
-  Stream<UserData> get userData{
-    return userCollection.document(uid).snapshots()
-    .map(_userDataFromSnapshot);
+  //get the Latest Fixtures stream
+  Stream<List<Fixture>> get latestFixtures{
+    return fixturesCollection.snapshots()
+        .map(_latestFixtureListFromSnapshot);
   }
+
+  /* Ticket Booking MANAGEMENT */
+  //add and update user
+  Future addTicketBooking(String game,String noOfTickets,String cardType,String cardNumber,String csvNumber) async {
+    return await ticketBookingCollection.add({
+      'uid':uid,
+      'game':game,
+      'noOfTickets' :noOfTickets,
+      'cardType':cardType,
+      'cardNumber':cardNumber,
+      'csvNumber':csvNumber,
+    });
+  }
+
+
 }

@@ -1,5 +1,6 @@
 class TicketBooking{
 
+  String bookingId;
   String uid;
   String game;
   String noOfTickets;
@@ -7,6 +8,6 @@ class TicketBooking{
   String cardNumber;
   String csvNumber;
 
-  TicketBooking({this.uid,this.game,this.noOfTickets,this.cardType,this.cardNumber,this.csvNumber});
+  TicketBooking({this.bookingId,this.uid,this.game,this.noOfTickets,this.cardType,this.cardNumber,this.csvNumber});
 
 }

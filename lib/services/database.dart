@@ -92,7 +92,7 @@ class DatabaseService{
   }
 
   /* Ticket Booking MANAGEMENT */
-  //add and update user
+  //add ticket booking
   Future addTicketBooking(String game,String noOfTickets,String cardType,String cardNumber,String csvNumber) async {
     return await ticketBookingCollection.add({
       'uid':uid,
@@ -112,9 +112,9 @@ class DatabaseService{
 
   //get ticket booking from snapshot
   List<TicketBooking> _userTicketBookingsFromSnapshot(QuerySnapshot snapshot){
-    print(snapshot);
     return snapshot.documents.map((doc){
       return TicketBooking(
+        bookingId: doc.documentID,
         uid:doc.data['uid'] ?? '',
         game:doc.data['game'] ?? '',
         noOfTickets:doc.data['noOfTickets'] ?? '',
@@ -125,5 +125,20 @@ class DatabaseService{
     }).toList();
   }
 
+  //update ticket booking
+  Future updateTicketBooking(String bookId,String game,String noOfTickets,String cardType,String cardNumber,String csvNumber) async {
+    return await ticketBookingCollection.document(bookId).setData({
+      'uid':uid,
+      'game':game,
+      'noOfTickets' :noOfTickets,
+      'cardType':cardType,
+      'cardNumber':cardNumber,
+      'csvNumber':csvNumber,
+    });
+  }
 
+  //cancel the booking
+  Future cancelBooking(String id) async {
+    return await ticketBookingCollection.document(id).delete();
+  }
 }

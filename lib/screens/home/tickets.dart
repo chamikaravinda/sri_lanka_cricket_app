@@ -17,7 +17,25 @@ class Tickets extends StatefulWidget {
   _TicketsState createState() => _TicketsState();
 }
 
-class _TicketsState extends State<Tickets> {
+class _TicketsState extends State<Tickets> with SingleTickerProviderStateMixin{
+
+  TabController _controller;
+
+  @override
+  void initState() {
+    _controller = new TabController(
+      length: 2,
+      vsync: this
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -36,47 +54,46 @@ class _TicketsState extends State<Tickets> {
           elevation: 0.0,
         ),
         drawer: SideDrawer(toggleView: widget.toggleView),
-        body: new DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              title:new TabBar(
-                tabs: [
-                  Tab(
-                    child:Row(
-                        children: <Widget>[
-                          Icon(Icons.add),
-                          Text(' New Booking')
-                        ],
-                    )
-                  ),
-                  Tab(
-                      child:Row(
-                        children: <Widget>[
-                          Icon(Icons.view_list),
-                          Text(' My Bookings')
-                        ],
-                      )
-                  ),
-                ],
-              ),
-            ),
-            body: TabBarView(
-              children: [
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+        body: Scaffold(
+          appBar: AppBar(
+            title:new TabBar(
+              controller: _controller,
+              tabs: [
+                Tab(
+                  child:Row(
                       children: <Widget>[
-                        TicketNewBooking(),
+                        Icon(Icons.add),
+                        Text(' New Booking')
                       ],
-                    ),
-                  ),
+                  )
                 ),
-                TicketBookings(),
+                Tab(
+                    child:Row(
+                      children: <Widget>[
+                        Icon(Icons.view_list),
+                        Text(' My Bookings')
+                      ],
+                    )
+                ),
               ],
             ),
+          ),
+          body: TabBarView(
+            controller: _controller,
+            children: [
+              SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      TicketNewBooking(tabController: _controller,),
+                    ],
+                  ),
+                ),
+              ),
+              TicketBookings(),
+            ],
           ),
         ),
       ),

@@ -23,7 +23,6 @@ class _SignInState extends State<SignIn> {
   //text filed state
   String email = '';
   String password = '';
-  String error ='';
 
   @override
   Widget build(BuildContext context) {
@@ -112,9 +111,9 @@ class _SignInState extends State<SignIn> {
                             dynamic result = await _authService.signInWithEmailAndPassword(email, password);
                             if(result == null){
                               setState(() {
-                                error ='Wrong email or password';
                                 loading = false;
                               });
+                              showToast("Wrong Email Or Password");
                             }
                           }
                         },
@@ -145,10 +144,6 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     SizedBox(height: 12.0),
-                    Text(
-                      error,
-                      style: TextStyle(color: Colors.red,fontSize: 14.0),
-                    )
                   ],
                 ),
               ),

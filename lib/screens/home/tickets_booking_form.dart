@@ -6,16 +6,18 @@ import 'package:app/shared/constants.dart';
 class TicketBookingForm extends StatefulWidget {
 
   final fixtures;
-  TicketBookingForm({this.fixtures});
+  final TabController tabController;
+  TicketBookingForm({this.fixtures,this.tabController});
 
   @override
-  _TicketBookingFormState createState() => _TicketBookingFormState(this.fixtures);
+  _TicketBookingFormState createState() => _TicketBookingFormState(this.fixtures,this.tabController);
 }
 
 class _TicketBookingFormState extends State<TicketBookingForm> {
 
   final fixtures;
-  _TicketBookingFormState(this.fixtures);
+  final TabController tabController;
+  _TicketBookingFormState(this.fixtures,this.tabController);
 
   final _ticketFormKey = GlobalKey<FormState>();
 
@@ -92,15 +94,17 @@ class _TicketBookingFormState extends State<TicketBookingForm> {
           TextFormField(
               decoration: textInputDecorationBlack.copyWith(
                   hintText: 'Not more than 10 tickets',
-                  prefixIcon: Icon(Icons.vpn_key,color: Colors.grey,)
+                  prefixIcon: Icon(Icons.art_track,color: Colors.grey,)
               ),
               initialValue: _noOfTickets,
               validator: (value) {
                 if(value==null||value==''){
                   return 'Enter the valid ticket amount';
                 }
-                if (value.isEmpty) {
+                else if (value.isEmpty) {
                   return 'Enter the valid ticket amount';
+                }else  if(int.parse(value)>10){
+                  return 'You can not book more than 10 tickets';
                 }
                 return null;
               },
@@ -122,7 +126,7 @@ class _TicketBookingFormState extends State<TicketBookingForm> {
               return InputDecorator(
                 decoration: textInputDecorationBlack.copyWith(
                     hintText: 'Debit/Credit Card Type',
-                    prefixIcon: Icon(Icons.event,color: Colors.grey,)
+                    prefixIcon: Icon(Icons.credit_card,color: Colors.grey,)
                 ),
                 isEmpty: _cardType == '',
                 child: DropdownButtonHideUnderline(
@@ -157,7 +161,7 @@ class _TicketBookingFormState extends State<TicketBookingForm> {
           TextFormField(
               decoration: textInputDecorationBlack.copyWith(
                   hintText: 'Credit Card number',
-                  prefixIcon: Icon(Icons.vpn_key,color: Colors.grey,)
+                  prefixIcon: Icon(Icons.credit_card,color: Colors.grey,)
               ),
               validator: (val)=>val.length!=16 ? 'Enter the valid Card Number' :null,
               onChanged: (val){
@@ -199,11 +203,12 @@ class _TicketBookingFormState extends State<TicketBookingForm> {
                 if(_ticketFormKey.currentState.validate()){
                   try{
                     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-                    dynamic result=DatabaseService(uid:user.uid).addTicketBooking(_game, _noOfTickets, _cardType, _cardNumber, _cvsNumber);
+                    dynamic result= await DatabaseService(uid:user.uid).addTicketBooking(_game, _noOfTickets, _cardType, _cardNumber, _cvsNumber);
                     if(result!=null){
                       showToast('Booking Successfull');
+                      widget.tabController.index = 1;
                     }else{
-                      showToast('Error in updating the userprofile');
+                      showToast('Error in booking the tickets');
                     }
                   }catch(e){
                     showToast('Error: $e');

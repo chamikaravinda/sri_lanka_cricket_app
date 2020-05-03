@@ -1,4 +1,5 @@
 import 'package:app/models/fixture.dart';
+import 'package:app/models/review.dart';
 import 'package:app/models/ticket_booking.dart';
 import 'package:app/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -151,9 +152,33 @@ class DatabaseService{
   //add Review
   Future addReview(String game,double rating,String review) async {
     return await reviewCollection.add({
+      'uid':uid,
       'game':game,
       'rating':rating,
       'review' :review,
     });
+  }
+  //get user reviews snapshot
+  Stream<List<Review>> get userReviews{
+    return reviewCollection.where('uid',isEqualTo:uid).snapshots()
+        .map(_userReviewsFromSnapshot);
+  }
+
+  //get user reviews from snapshot
+  List<Review> _userReviewsFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      return Review(
+        reviewId: doc.documentID,
+        uid:doc.data['uid'] ?? '',
+        game:doc.data['game'] ?? '',
+        rating: doc.data['rating'] ?? '',
+        review: doc.data['review'] ?? '',
+      );
+    }).toList();
+  }
+
+  //delete review the booking
+  Future deleteReview(String id) async {
+    return await reviewCollection.document(id).delete();
   }
 }

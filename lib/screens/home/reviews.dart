@@ -1,4 +1,5 @@
 import 'package:app/models/fixture.dart';
+import 'package:app/models/review.dart';
 import 'package:app/screens/home/new_review.dart';
 import 'package:app/services/database.dart';
 import 'package:app/shared/sideDrawer.dart';
@@ -40,9 +41,9 @@ class _ReviewsState extends State<Reviews> with SingleTickerProviderStateMixin {
           StreamProvider<List<Fixture>>.value(
             value: DatabaseService().latestFixtures,
           ),
-//    StreamProvider<List<TicketBooking>>.value(
-//    value: DatabaseService().userTicketBookings,
-//    ),
+          StreamProvider<List<Review>>.value(
+          value: DatabaseService().userReviews,
+          ),
         ],
         child: Scaffold(
           appBar: AppBar(
@@ -84,7 +85,7 @@ class _ReviewsState extends State<Reviews> with SingleTickerProviderStateMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        NewReview()
+                        NewReview(tabController: _controller,)
                       ],
                     ),
                   ),

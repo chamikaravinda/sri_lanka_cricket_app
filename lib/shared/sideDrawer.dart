@@ -3,8 +3,8 @@ import 'package:app/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:app/services/database.dart';
-
 import 'loading.dart';
+
 class SideDrawer extends StatefulWidget {
 
   final Function toggleView;
@@ -114,13 +114,13 @@ class _SideDrawerState extends State<SideDrawer> {
                             color: Colors.white,
                           ),
                           title: Text(
-                            'ICC Rankings',
+                            'Reviews',
                             style: TextStyle(
                                 color: Colors.white
                             ),
                           ),
                           onTap: () {
-                            print('Change to ICC Rankings');
+                            print('Change to Reviews');
                             widget.toggleView(4);
                           },
                         ),

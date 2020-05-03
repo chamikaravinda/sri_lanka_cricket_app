@@ -30,16 +30,18 @@ class _TicketBookingFormState extends State<TicketBookingForm> {
   String _cvsNumber;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    String temp;
+    fixtures.forEach((fixture) => {
+      temp = fixture.match+"\n VS "+fixture.vs,
+      _dropDownGame.add(temp),
+    });
+    _game = _dropDownGame.first;
+    super.initState();
+  }
 
-    if(_dropDownGame.length==0){
-      String temp;
-      fixtures.forEach((fixture) => {
-        temp = fixture.match+"\n VS "+fixture.vs,
-        _dropDownGame.add(temp),
-      });
-      //_game = _dropDownGame.first;
-    }
+  @override
+  Widget build(BuildContext context) {
 
     return Form(
       key: _ticketFormKey,

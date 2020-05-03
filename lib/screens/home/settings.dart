@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:app/shared/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
 class Settings extends StatefulWidget {
@@ -45,7 +44,6 @@ class _SettingsState extends State<Settings> {
         lastDate: DateTime(DateTime.now().year+1),
 
       );
-      print (d);
       if (d != null)
         setState(() {
           birthday = new DateFormat.yMMMMd("en_US").format(d);

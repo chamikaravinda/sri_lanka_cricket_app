@@ -1,22 +1,22 @@
 import 'package:app/models/fixture.dart';
-import 'package:app/screens/home/tickets_booking_form.dart';
 import 'package:app/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TicketNewBooking extends StatefulWidget {
+import 'new_review_form.dart';
 
+class NewReview extends StatefulWidget {
   TabController tabController;
-  TicketNewBooking({this.tabController});
+  NewReview({this.tabController});
 
   @override
-  _TicketNewBookingState createState() => _TicketNewBookingState(tabController);
+  _NewReviewState createState() => _NewReviewState(tabController);
 }
 
-class _TicketNewBookingState extends State<TicketNewBooking> {
+class _NewReviewState extends State<NewReview> {
 
   TabController tabController;
-  _TicketNewBookingState(this.tabController);
+  _NewReviewState(this.tabController);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _TicketNewBookingState extends State<TicketNewBooking> {
     if(fixtures.length==0){
       return Loading();
     }else{
-      return TicketBookingForm(fixtures:fixtures,tabController:tabController);
+      return NewReviewForm(fixtures:fixtures,tabController:tabController);
     }
   }
 }

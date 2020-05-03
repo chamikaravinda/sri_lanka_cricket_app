@@ -11,6 +11,7 @@ class DatabaseService{
   final CollectionReference userCollection = Firestore.instance.collection('users');
   final CollectionReference fixturesCollection = Firestore.instance.collection('upcomingFixtures');
   final CollectionReference ticketBookingCollection = Firestore.instance.collection('ticketBooking');
+  final CollectionReference reviewCollection = Firestore.instance.collection('userReviews');
 
   /* USER MANAGEMENT */
   //add and update user
@@ -55,7 +56,9 @@ class DatabaseService{
   List<Fixture> _latestFixtureListFromSnapshot(QuerySnapshot snapshot){
     var len = snapshot.documents.asMap().length;
     if(len<5){
+      print('Length less than 5');
       return snapshot.documents.map((doc){
+        print(doc.data['match']);
         return Fixture(
           date: doc.data['date'] ?? '',
           flag: doc.data['flag'] ?? '',
@@ -66,7 +69,9 @@ class DatabaseService{
       }).toList();
     }
     else{
+      print('Length lager than 5');
       return snapshot.documents.map((doc){
+        print(doc.data['match']);
         return Fixture(
           date: doc.data['date'] ?? '',
           flag: doc.data['flag'] ?? '',
@@ -140,5 +145,15 @@ class DatabaseService{
   //cancel the booking
   Future cancelBooking(String id) async {
     return await ticketBookingCollection.document(id).delete();
+  }
+
+  /*Review Managment*/
+  //add Review
+  Future addReview(String game,double rating,String review) async {
+    return await reviewCollection.add({
+      'game':game,
+      'rating':rating,
+      'review' :review,
+    });
   }
 }

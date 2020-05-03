@@ -1,6 +1,6 @@
 import 'package:app/models/fixture.dart';
 import 'package:app/screens/home/fixtures.dart';
-import 'package:app/screens/home/icc_ranking.dart';
+import 'package:app/screens/home/reviews.dart';
 import 'package:app/screens/home/settings.dart';
 import 'package:app/screens/home/tickets.dart';
 import 'package:app/shared/loading.dart';
@@ -74,7 +74,7 @@ class _HomeState extends State<Home> {
     }else if(showPage ==3 ) {
       return Tickets(toggleView: toggleView,);
     }else if(showPage ==4 ) {
-      return ICCRanking(toggleView: toggleView,);
+      return Reviews(toggleView: toggleView,);
     }else if(showPage ==8) {
       return Settings(toggleView: toggleView,);
     }else{

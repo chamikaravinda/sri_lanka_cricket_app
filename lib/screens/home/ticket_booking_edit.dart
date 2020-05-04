@@ -13,9 +13,8 @@ class _TicketBookingEditState extends State<TicketBookingEdit> {
   final _ticketFormKey = GlobalKey<FormState>();
 
   List<String> _dropDownCardType=["Visa","Master Card" ,"American Express"];
-  String _fixture;
   String _noOfTickets = '';
-  String _cardType="Visa";
+  String _cardType;
   String _cardNumber;
   String _cvsNumber;
 
@@ -24,12 +23,9 @@ class _TicketBookingEditState extends State<TicketBookingEdit> {
   Widget build(BuildContext context) {
 
     final TicketBooking booking = ModalRoute.of(context).settings.arguments;
-
-    _fixture = booking.game;
-    _noOfTickets =booking.noOfTickets;
-    _cardType = booking.cardType;
-    _cardNumber = booking.cardNumber;
-
+    if(_cardType == null){
+      _cardType=booking.cardType;
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
@@ -56,7 +52,7 @@ class _TicketBookingEditState extends State<TicketBookingEdit> {
                         prefixIcon: Icon(Icons.event,color: Colors.grey,),
                         fillColor: Colors.grey[300]
                     ),
-                    initialValue: _fixture,
+                    initialValue: booking.game,
                     readOnly: true,
                 ),
                 SizedBox(height: 20.0,),
@@ -72,7 +68,7 @@ class _TicketBookingEditState extends State<TicketBookingEdit> {
                         hintText: 'Not more than 10 tickets',
                         prefixIcon: Icon(Icons.vpn_key,color: Colors.grey,),
                     ),
-                    initialValue: _noOfTickets,
+                    initialValue: booking.noOfTickets,
                     validator: (value) {
                       if(int.parse(value)<int.parse(booking.noOfTickets)){
                         return 'You can not decrease the number of tickets ';
@@ -137,7 +133,7 @@ class _TicketBookingEditState extends State<TicketBookingEdit> {
                         hintText: 'Credit Card number',
                         prefixIcon: Icon(Icons.credit_card,color: Colors.grey,)
                     ),
-                    initialValue: _cardNumber,
+                    initialValue: booking.cardNumber,
                     validator: (val)=>val.length!=16 ? 'Enter the valid Card Number' :null,
                     onChanged: (val){
                       setState(() => _cardNumber=val);
@@ -177,12 +173,16 @@ class _TicketBookingEditState extends State<TicketBookingEdit> {
                     onPressed: () async {
                       if(_ticketFormKey.currentState.validate()){
                         try{
-                          dynamic result= await DatabaseService(uid:booking.uid).updateTicketBooking(booking.bookingId,_fixture, _noOfTickets, _cardType, _cardNumber, _cvsNumber);
-                          if(result!=null){
-                            showToast('Booking Update Successfull');
-                          }else{
-                            showToast('Error in updating the booking');
-                          }
+                          dynamic result= await DatabaseService(uid:booking.uid).updateTicketBooking(
+                              booking.bookingId,
+                              booking.game,
+                              _noOfTickets??booking.noOfTickets,
+                              _cardType??booking.cardType,
+                              _cardNumber??booking.cardNumber,
+                              _cvsNumber
+                          );
+                          showToast('Booking Update Successfull');
+                          Navigator.pop(context);
                         }catch(e){
                           showToast('Error: $e');
                         }
@@ -205,7 +205,6 @@ class _TicketBookingEditState extends State<TicketBookingEdit> {
                       try{
                         bool confirm = await _confirmDialog();
                         if(confirm){
-                          print(confirm);
                           await DatabaseService(uid:booking.uid).cancelBooking(booking.bookingId);
                           showToast('Booking Canceled');
                           Navigator.pop(context);

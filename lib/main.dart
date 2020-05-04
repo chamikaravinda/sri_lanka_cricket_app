@@ -1,4 +1,5 @@
 import 'package:app/models/user.dart';
+import 'package:app/screens/home/review_edit.dart';
 import 'package:app/screens/home/ticket_booking_edit.dart';
 import 'package:app/screens/wrapper.dart';
 import 'package:app/services/auth.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
       initialRoute:'/' ,
       routes: {
         '/': (context) => Home(),
-        '/user_booking':(context) => TicketBookingEdit()
+        '/user_booking':(context) => TicketBookingEdit(),
+        '/user_review':(context) => ReviewEdit()
       },
     );
   }

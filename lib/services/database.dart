@@ -57,9 +57,7 @@ class DatabaseService{
   List<Fixture> _latestFixtureListFromSnapshot(QuerySnapshot snapshot){
     var len = snapshot.documents.asMap().length;
     if(len<5){
-      print('Length less than 5');
       return snapshot.documents.map((doc){
-        print(doc.data['match']);
         return Fixture(
           date: doc.data['date'] ?? '',
           flag: doc.data['flag'] ?? '',
@@ -70,9 +68,7 @@ class DatabaseService{
       }).toList();
     }
     else{
-      print('Length lager than 5');
       return snapshot.documents.map((doc){
-        print(doc.data['match']);
         return Fixture(
           date: doc.data['date'] ?? '',
           flag: doc.data['flag'] ?? '',
@@ -139,7 +135,7 @@ class DatabaseService{
       'noOfTickets' :noOfTickets,
       'cardType':cardType,
       'cardNumber':cardNumber,
-      'csvNumber':csvNumber,
+      'csvNumber':csvNumber
     });
   }
 
@@ -177,6 +173,15 @@ class DatabaseService{
     }).toList();
   }
 
+  //update review
+  Future updateReview(String reviewId,String game,double rating,String review) async {
+      return await reviewCollection.document(reviewId).setData({
+        'uid':uid,
+        'game':game,
+        'rating':rating,
+        'review' :review
+      },merge:false);
+  }
   //delete review the booking
   Future deleteReview(String id) async {
     return await reviewCollection.document(id).delete();

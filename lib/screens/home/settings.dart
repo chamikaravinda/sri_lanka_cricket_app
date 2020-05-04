@@ -25,10 +25,9 @@ class _SettingsState extends State<Settings> {
   final _ediPofileFormKey = GlobalKey<FormState>();
 
   //text filed state
-  String name = '';
-  String email = '';
-  String password = '';
-  String birthday = null;
+  String name;
+  String password;
+  String birthday;
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +54,10 @@ class _SettingsState extends State<Settings> {
       builder: (context, snapshot) {
         if(snapshot.hasData){
           UserData userData = snapshot.data;
-          name = userData.name;
-          email =userData.email;
 
-          if(userData.birthDay != '' && birthday == null){
-            birthday = userData.birthDay;
+          if(userData.birthDay != '' && birthday==null){
+            birthday=userData.birthDay;
           }
-
 
           return Scaffold(
             appBar: AppBar(
@@ -177,12 +173,13 @@ class _SettingsState extends State<Settings> {
                                   ),
                                   onPressed: () async {
                                     if(_ediPofileFormKey.currentState.validate()){
-                                      dynamic result = await _authService.updateUserDetaisl(email,password,name,birthday);
-                                      if(result!=null){
-                                        showToast('Update Successfull');
-                                      }else{
-                                        showToast('Error in updating the userprofile');
-                                      }
+                                      dynamic result = await _authService.updateUserDetaisl(
+                                          userData.email
+                                          ,password,
+                                          name??userData.name,
+                                          birthday??userData.birthDay
+                                      );
+                                      showToast(result.toString());
                                     }
                                   },
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),

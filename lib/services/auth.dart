@@ -1,6 +1,7 @@
 import 'package:app/models/user.dart';
 import 'package:app/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 class AuthService{
 
@@ -61,10 +62,13 @@ class AuthService{
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
         FirebaseUser user = result.user;
         await DatabaseService(uid: user.uid).updateUserData(name,email,birthDay);
-        return user;
+        return 'User details updated successfully';
+    }on PlatformException catch(e){
+      print(e.toString());
+      return 'Wrong Current Password';
     }catch(e){
       print(e.toString());
-      return null;
+      return 'Error in updating user details';
     }
   }
 

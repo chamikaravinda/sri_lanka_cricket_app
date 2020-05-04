@@ -124,66 +124,6 @@ class _SideDrawerState extends State<SideDrawer> {
                             widget.toggleView(4);
                           },
                         ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.view_list,
-                            color: Colors.white,
-                          ),
-                          title: Text(
-                            'ICC Test Championship',
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.view_list,
-                            color: Colors.white,
-                          ),
-                          title: Text(
-                            'ICC ODI Championship',
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.supervisor_account,
-                            color: Colors.white,
-                          ),
-                          title: Text(
-                            'Squads',
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.plus_one,
-                            color: Colors.white,
-                          ),
-                          title: Text(
-                            '1st Class Tournament',
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
                       ],
                     ),
                   ),

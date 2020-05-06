@@ -1,10 +1,6 @@
-import 'package:app/models/user.dart';
 import 'package:app/screens/home/review_edit.dart';
 import 'package:app/screens/home/ticket_booking_edit.dart';
-import 'package:app/screens/wrapper.dart';
-import 'package:app/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'home.dart';
 
